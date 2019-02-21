@@ -1,6 +1,8 @@
 <?php
 
-// Settings
+// Settings - Configuration
+$timezone = 'Europe/Athens';
+
 $request_ips = [
     '54.36.149.94', //France
     '45.61.164.120', // USA
@@ -122,8 +124,6 @@ $request_ports = [
     '8000',
     '443',
     '443',
-    '3000',
-    '6000',
     '80',
     '80',
     '80',
@@ -332,7 +332,6 @@ function randomArrayValue($array) {
 
 /**
  * @param array $settings
- * @param string $timezone
  * @return string
  */
 function createLogRow($settings) {
@@ -348,7 +347,7 @@ function createLogRow($settings) {
 
     $blob = rand(0, 90000);
 
-    $log = $date ." ". $user ." ". $ip .":". $port ." \"". $verb ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob;
+    $log = $date ." ". $user ." ". $ip ." \"". $verb ." ". $port ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob;
 
     return $log;
 }
@@ -356,13 +355,12 @@ function createLogRow($settings) {
 
 
 /**
- * @param $offset
- * @param string $timezone
+ * @param int $offset
  * @return false|string
  */
-function generateTimestamp($offset, $timezone = 'Europe/Athens') {
-    date_default_timezone_set($timezone);
-    $date = date("Y-m-d H:i:s", strtotime("+$offset sec"));
+function generateTimestamp($offset) {
+    date_default_timezone_set($GLOBALS['timezone']);
+    $date = date("Y-m-d\TH:i:s", strtotime("+$offset sec"));
 
     return $date;
 }
@@ -420,16 +418,24 @@ function generateLogs($items = 1) {
     return $logs;
 }
 
+/**
+ * @param int $log_items
+ * @param int $files_number
+ * @param string $directory
+ * @param string $name
+ */
+function generateLogFiles($log_items = 10000, $files_number = 10, $directory = 'logs', $name = 'website-access.log') {
+    if(!is_dir($directory)){
+        mkdir($directory, 0755, true);
+    }
+
+    for ($i = 1; $i <= $files_number; $i++) {
+        $logs = generateLogs($log_items);
+        $filename = $directory . '/' . $name . '.' . $i;
+        appendToFile($filename, $logs);
+        gzCompressFile($filename);
+    }
+}
+
 // Generate gz logs
-if(!is_dir('logs')){
-    //Directory does not exist, so lets create it.
-    mkdir('logs', 0755, true);
-}
-
-for ($i = 1; $i <= 10; $i++) {
-    $logs = generateLogs(10000);
-    $filename = 'logs/website-access.log.'.$i;
-    appendToFile($filename, $logs);
-    gzCompressFile($filename);
-}
-
+generateLogFiles();
