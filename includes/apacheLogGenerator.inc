@@ -38,15 +38,15 @@ function generateLogs($items = 1, $export = 'file') {
     }
 
     for ($i = 1; $i <= $items; $i++) {
-        $settings['ip'] = randomArrayValue($GLOBALS['request_ips']);
-        $settings['port'] = randomArrayValue($GLOBALS['request_ports']);
-        $settings['user'] = randomArrayValue($GLOBALS['request_users']);
-        $settings['path'] = randomArrayValue($GLOBALS['request_paths']);
-        $settings['attack'] = randomArrayValue($GLOBALS['attack_suffix']);
-        $settings['verb'] = randomArrayValue($GLOBALS['request_http_verbs']);
-        $settings['status'] = randomArrayValue($GLOBALS['request_http_status']);
+        $settings['ip'] = getRandomWeightedElement($GLOBALS['request_ips']);
+        $settings['port'] = getRandomWeightedElement($GLOBALS['request_ports']);
+        $settings['user'] = getRandomWeightedElement($GLOBALS['request_users']);
+        $settings['path'] = getRandomWeightedElement($GLOBALS['request_paths']);
+        $settings['attack'] = getRandomWeightedElement($GLOBALS['attack_suffix']);
+        $settings['verb'] = getRandomWeightedElement($GLOBALS['request_http_verbs']);
+        $settings['status'] = getRandomWeightedElement($GLOBALS['request_http_status']);
         $settings['date'] = generateTimestamp($i);
-        $settings['version'] = randomArrayValue($GLOBALS['request_http_version']);
+        $settings['version'] = getRandomWeightedElement($GLOBALS['request_http_version']);
 
         $logs = $logs . createLogRow($settings) . $separator;
     }
@@ -68,7 +68,44 @@ function generateLogFiles($log_items = 10000, $files_number = 10, $directory = '
     for ($i = 1; $i <= $files_number; $i++) {
         $logs = generateLogs($log_items, 'file');
         $filename = $directory . '/' . $name . '.' . $i;
-        appendToFile($filename, $logs);
-        gzCompressFile($filename);
+
+        createFile($logs, $filename);
+    }
+}
+
+/**
+ * @param int $sleep
+ * @param int $log_items
+ * @param string $directory
+ * @param string $name
+ * @param bool $keep_files
+ */
+function generateRealTimeLogs($sleep = 1, $log_items = 500, $directory = 'logs', $name = 'website-access.log', $keep_files = true) {
+    if(!is_dir($directory)){
+        mkdir($directory, 0755, true);
+    }
+    
+    $logs = [];
+    $suffix = 1;
+
+    // Command to run every 1 seconds
+    for ($i = 0; true; $i++) {
+        sleep($sleep);
+        $log = generateLogs(1, 'file');
+
+        // Append item to the $logs array
+        $logs[] = $log;
+        $count = count($logs);
+
+        createFile(arrayToString($logs), $name);
+
+        // If we have $log_items and we keep them add them to a file
+        if ($count > $log_items && $keep_files) {
+            $filename = $directory . '/' . $name . '.' . $suffix;
+            createFile(arrayToString($logs), $filename);
+
+            $logs = [];
+            $suffix = $suffix + 1;
+        }
     }
 }

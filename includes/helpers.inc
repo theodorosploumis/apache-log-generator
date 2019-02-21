@@ -20,6 +20,45 @@ function randomArrayValue($array) {
 }
 
 /**
+ * Utility function for getting random values with weighting.
+ *
+ * Pass in an associative array, such as array('A'=>5, 'B'=>45, 'C'=>50)
+ * An array like this means that "A" has a 5% chance of being selected, "B" 45%, and "C" 50%.
+ *
+ * The return value is the array key, A, B, or C in this case.
+ * Note that the values assigned do not have to be percentages.
+ * The values are simply relative to each other.
+ * Also note that weights should be integers.
+ *
+ * @param array $weightedValues
+ * @return int|string
+ */
+function getRandomWeightedElement(array $weightedValues) {
+    $rand = mt_rand(1, (int) array_sum($weightedValues));
+
+    foreach ($weightedValues as $key => $value) {
+        $rand -= $value;
+        if ($rand <= 0) {
+            return $key;
+        }
+    }
+}
+
+/**
+ * @param array $array
+ * @return string
+ */
+function arrayToString($array) {
+    $value = "";
+
+    foreach($array as $k => $v) {
+        $value = $value . $v;
+    }
+
+    return $value;
+}
+
+/**
  * @param $filename
  * @param $text
  * @return bool|int
@@ -27,6 +66,24 @@ function randomArrayValue($array) {
 function appendToFile($filename, $text) {
     $file = file_put_contents($filename, $text.PHP_EOL , FILE_APPEND | LOCK_EX);
     return $file;
+}
+
+/**
+ * @param string $data
+ * @param string $filename
+ * @param bool $gz
+ * @param bool $unlink
+ */
+function createFile($data, $filename, $gz = true, $unlink = true) {
+    appendToFile($filename, $data);
+
+    if ($gz) {
+        gzCompressFile($filename);
+    }
+
+    if ($unlink) {
+        unlink($filename);
+    }
 }
 
 /**
@@ -55,5 +112,32 @@ function gzCompressFile($source, $level = 9){
     }
     else {
         return $destination;
+    }
+}
+
+/**
+ * Disable apache2 output buffering/compression
+ */
+function disable_ob() {
+    // Turn off output buffering
+    ini_set('output_buffering', 'off');
+    // Turn off PHP output compression
+    ini_set('zlib.output_compression', false);
+    // Implicitly flush the buffer(s)
+    ini_set('implicit_flush', true);
+    ob_implicit_flush(true);
+    // Clear, and turn off output buffering
+    while (ob_get_level() > 0) {
+        // Get the current level
+        $level = ob_get_level();
+        // End the buffering
+        ob_end_clean();
+        // If the current level has not changed, abort
+        if (ob_get_level() == $level) break;
+    }
+    // Disable apache output buffering/compression
+    if (function_exists('apache_setenv')) {
+        apache_setenv('no-gzip', '1');
+        apache_setenv('dont-vary', '1');
     }
 }
