@@ -277,6 +277,11 @@ $request_http_status = [
     '200',
 ];
 
+$request_http_version = [
+    'HTTP/1.0',
+    'HTTP/1.1',
+];
+
 $request_users = [
     'admin',
     'admin1',
@@ -311,131 +316,3 @@ $request_users = [
     'anonymous',
     'anonymous',
 ];
-
-/**
- * @param $filename
- * @param $text
- * @return bool|int
- */
-function appendToFile($filename, $text) {
-    $file = file_put_contents($filename, $text.PHP_EOL , FILE_APPEND | LOCK_EX);
-    return $file;
-}
-
-/**
- * @param array $array
- * @return mixed
- */
-function randomArrayValue($array) {
-    return $array[array_rand($array)];
-}
-
-/**
- * @param array $settings
- * @return string
- */
-function createLogRow($settings) {
-    $ip = $settings['ip'];
-    $port = $settings['port'];
-    $user = $settings['user'];
-    $path = $settings['path'];
-    $attack = $settings['attack'];
-    $verb = $settings['verb'];
-    $status = $settings['status'];
-    $date = $settings['date'];
-    $http = $settings['http'];
-
-    $blob = rand(0, 90000);
-
-    $log = $date ." ". $user ." ". $ip ." \"". $verb ." ". $port ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob;
-
-    return $log;
-}
-
-
-
-/**
- * @param int $offset
- * @return false|string
- */
-function generateTimestamp($offset) {
-    date_default_timezone_set($GLOBALS['timezone']);
-    $date = date("Y-m-d\TH:i:s", strtotime("+$offset sec"));
-
-    return $date;
-}
-
-/**
- * @param string $source
- * @param int $level
- * @return bool|string
- */
-function gzCompressFile($source, $level = 9){
-    $destination = $source . '.gz';
-    $mode = 'wb' . $level;
-    $error = false;
-    if ($fp_out = gzopen($destination, $mode)) {
-        if ($fp_in = fopen($source,'rb')) {
-            while (!feof($fp_in))
-                gzwrite($fp_out, fread($fp_in, 1024 * 512));
-            fclose($fp_in);
-        } else {
-            $error = true;
-        }
-        gzclose($fp_out);
-    } else {
-        $error = true;
-    }
-    if ($error) {
-        return false;
-    }
-    else {
-        return $destination;
-    }
-}
-
-/**
- * @param int $items
- * @return string
- */
-function generateLogs($items = 1) {
-    $logs = "";
-
-    for ($i = 1; $i <= $items; $i++) {
-        $settings['ip'] = randomArrayValue($GLOBALS['request_ips']);
-        $settings['port'] = randomArrayValue($GLOBALS['request_ports']);
-        $settings['user'] = randomArrayValue($GLOBALS['request_users']);
-        $settings['path'] = randomArrayValue($GLOBALS['request_paths']);
-        $settings['attack'] = randomArrayValue($GLOBALS['attack_suffix']);
-        $settings['verb'] = randomArrayValue($GLOBALS['request_http_verbs']);
-        $settings['status'] = randomArrayValue($GLOBALS['request_http_status']);
-        $settings['date'] = generateTimestamp($i);
-        $settings['http'] = "HTTP/1.1";
-
-        $logs = $logs . createLogRow($settings) . "\n";
-    }
-
-    return $logs;
-}
-
-/**
- * @param int $log_items
- * @param int $files_number
- * @param string $directory
- * @param string $name
- */
-function generateLogFiles($log_items = 10000, $files_number = 10, $directory = 'logs', $name = 'website-access.log') {
-    if(!is_dir($directory)){
-        mkdir($directory, 0755, true);
-    }
-
-    for ($i = 1; $i <= $files_number; $i++) {
-        $logs = generateLogs($log_items);
-        $filename = $directory . '/' . $name . '.' . $i;
-        appendToFile($filename, $logs);
-        gzCompressFile($filename);
-    }
-}
-
-// Generate gz logs
-generateLogFiles();
