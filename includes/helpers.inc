@@ -2,11 +2,13 @@
 
 /**
  * @param int $offset
+ * @param int $format
+ * @param int $time_zone
  * @return false|string
  */
-function generateTimestamp($offset) {
-    date_default_timezone_set($GLOBALS['timezone']);
-    $date = date("Y-m-d\TH:i:s", strtotime("+$offset sec"));
+function generateTimestamp($offset, $format, $time_zone) {
+    date_default_timezone_set($time_zone);
+    $date = date($format, strtotime("+$offset sec"));
 
     return $date;
 }

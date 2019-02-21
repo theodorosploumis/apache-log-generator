@@ -3,10 +3,11 @@
 include_once 'includes/helpers.inc';
 
 /**
- * @param array $settings
+ * @param $settings
+ * @param string $log_format
  * @return string
  */
-function createLogRow($settings) {
+function createLogRow($settings, $log_format = 'common') {
     $ip = $settings['ip'];
     $port = $settings['port'];
     $user = $settings['user'];
@@ -16,9 +17,25 @@ function createLogRow($settings) {
     $status = $settings['status'];
     $date = $settings['date'];
     $http = $settings['version'];
-    $blob = rand(0, 90000);
+    $referrer = $settings['referrer'];
+    $agent = $settings['agent'];
+    $blob = rand(1, 90000);
 
-    $log = $date ." ". $user ." ". $ip ." \"". $verb ." ". $port ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob;
+    $log = "";
+
+    switch ($log_format) {
+        case 'common':
+            $user = "-";
+            $log = $ip ." - ". $user ." [". $date ." +0200] ". "\"" . $verb ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob;
+            break;
+        case 'combined':
+            $user = "-";
+            $log = $ip ." - ". $user ." [". $date ." +0200] ". "\"" . $verb ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob ." \"". $referrer ."\" \"" . $agent ."\"";
+            break;
+        case 'custom':
+            $log = $date ." ". $user ." ". $ip ." \"". $verb ." ". $port ." ". $path.$attack . " " .$http. "\" " . $status ." ". $blob;
+            break;
+    }
 
     return $log;
 }
@@ -26,9 +43,10 @@ function createLogRow($settings) {
 /**
  * @param int $items
  * @param string $export
+ * @param string $log_format
  * @return string
  */
-function generateLogs($items = 1, $export = 'file') {
+function generateLogs($items = 1, $export = 'file', $log_format = 'common') {
     $logs = "";
     $separator = "\r\n";
 
@@ -45,10 +63,12 @@ function generateLogs($items = 1, $export = 'file') {
         $settings['attack'] = getRandomWeightedElement($GLOBALS['attack_suffix']);
         $settings['verb'] = getRandomWeightedElement($GLOBALS['request_http_verbs']);
         $settings['status'] = getRandomWeightedElement($GLOBALS['request_http_status']);
-        $settings['date'] = generateTimestamp($i);
+        $settings['date'] = generateTimestamp($i, $GLOBALS['time_format'], $GLOBALS['time_zone']);
         $settings['version'] = getRandomWeightedElement($GLOBALS['request_http_version']);
+        $settings['referrer'] = getRandomWeightedElement($GLOBALS['request_paths']);
+        $settings['agent'] = getRandomWeightedElement($GLOBALS['request_agents']);
 
-        $logs = $logs . createLogRow($settings) . $separator;
+        $logs = $logs . createLogRow($settings, $log_format) . $separator;
     }
 
     return $logs;
@@ -59,17 +79,20 @@ function generateLogs($items = 1, $export = 'file') {
  * @param int $files_number
  * @param string $directory
  * @param string $name
+ * @param string $log_format
+ * @param bool $gz
+ * @param bool $unlink
  */
-function generateLogFiles($log_items = 10000, $files_number = 10, $directory = 'logs', $name = 'website-access.log') {
+function generateLogFiles($log_items = 10000, $files_number = 10, $directory = 'logs', $name = 'website-access.log', $log_format = 'common', $gz = false, $unlink = false) {
     if(!is_dir($directory)){
         mkdir($directory, 0755, true);
     }
 
     for ($i = 1; $i <= $files_number; $i++) {
-        $logs = generateLogs($log_items, 'file');
+        $logs = generateLogs($log_items, 'file', $log_format);
         $filename = $directory . '/' . $name . '.' . $i;
 
-        createFile($logs, $filename);
+        createFile($logs, $filename, $gz, $unlink);
     }
 }
 
@@ -78,9 +101,10 @@ function generateLogFiles($log_items = 10000, $files_number = 10, $directory = '
  * @param int $log_items
  * @param string $directory
  * @param string $name
+ * @param string $log_format
  * @param bool $keep_files
  */
-function generateRealTimeLogs($sleep = 1, $log_items = 500, $directory = 'logs', $name = 'website-access.log', $keep_files = true) {
+function generateRealTimeLogs($sleep = 1, $log_items = 500, $directory = 'logs', $name = 'website-access.log', $keep_files = true, $log_format = 'common') {
     if(!is_dir($directory)){
         mkdir($directory, 0755, true);
     }
@@ -91,7 +115,7 @@ function generateRealTimeLogs($sleep = 1, $log_items = 500, $directory = 'logs',
     // Command to run every 1 seconds
     for ($i = 0; true; $i++) {
         sleep($sleep);
-        $log = generateLogs(1, 'file');
+        $log = generateLogs(1, 'file', $log_format);
 
         // Append item to the $logs array
         $logs[] = $log;
