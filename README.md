@@ -5,6 +5,9 @@ A simple php file that can generate fake apache2 access log files.
 You can add your own `settings.php`.
 
 ```
+git clone git@github.com:theodorosploumis/apache-log-generator.git
+cd apache-log-generator
+
 // Generate log files (see generateLogFiles.php example)
 php -f generateLogFiles.php
 ```
