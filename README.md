@@ -39,5 +39,25 @@ B) [goaccess](https://goaccess.io)
 goaccess goaccess --log-format=COMBINED -o myreport.html --real-time-html -f logs/combined-generated-logs.log.1
 ```
 
+### Log analyzers for security problems
+
+A) [scalp](https://github.com/BalloonPlanet/apache-scalp)
+
+```
+python scalp/scalp.py -l logs/combined-generated-logs.log.1 --html --output ~/scalp/export
+```
+
+B) [lorg](https://github.com/jensvoid/lorg)
+
+```
+./lorg -d phpids -i combined logs/combined-generated-logs.log.1
+```
+
+C) [retep007/security-log](https://github.com/retep007/security-log)
+
+```
+ghc 
+```
+
 ### License
 [MIT](LICENSE) 2019
