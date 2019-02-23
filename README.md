@@ -39,6 +39,13 @@ B) [goaccess](https://goaccess.io)
 goaccess goaccess --log-format=COMBINED -o myreport.html --real-time-html -f logs/combined-generated-logs.log.1
 ```
 
+C) [antirez/visitors](https://github.com/antirez/visitors)
+
+```
+// See examples at http://www.hping.org/visitors
+./visitors -f myreport.html logs/combined-generated-logs.log.1
+```
+
 ### Log analyzers for security problems
 
 A) [scalp](https://github.com/BalloonPlanet/apache-scalp)
@@ -56,8 +63,12 @@ B) [lorg](https://github.com/jensvoid/lorg)
 C) [retep007/security-log](https://github.com/retep007/security-log)
 
 ```
-ghc 
+// Add your settings at secutity-log.yaml
+./security-log
 ```
+
+D) [EventLogAnalyzer](https://www.manageengine.com/products/eventlog/)
+
 
 ### License
 [MIT](LICENSE) 2019
