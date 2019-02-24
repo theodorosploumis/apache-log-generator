@@ -36,7 +36,8 @@ request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
 B) [goaccess](https://goaccess.io)
 
 ```
-goaccess goaccess --log-format=COMBINED -o myreport.html --real-time-html -f logs/combined-generated-logs.log.1
+goaccess --log-format=COMBINED -o myreport.html \
+         --real-time-html -f logs/combined-generated-logs.log.1
 ```
 
 C) [antirez/visitors](https://github.com/antirez/visitors)
