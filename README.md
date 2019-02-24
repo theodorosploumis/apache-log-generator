@@ -60,14 +60,41 @@ B) [lorg](https://github.com/jensvoid/lorg)
 ./lorg -d phpids -i combined logs/combined-generated-logs.log.1
 ```
 
-C) [retep007/security-log](https://github.com/retep007/security-log)
+C) [retep007/webserver-log](https://github.com/retep007/webserver-log)
+
+```
+# Example of one file apache logs at webserver_log.conf settings file
+
+---
+reporting:
+  - Std:
+      verbose: false
+xss_level: Intelligent
+services:
+  - Apache:
+      path: logs/combined-generated-logs.log.1
+
+```
 
 ```
 // Add your settings at secutity-log.yaml
-./security-log
+./webserver_log -c webserver_log.conf
 ```
 
-D) [EventLogAnalyzer](https://www.manageengine.com/products/eventlog/)
+D) [nekhbet/WebForensik](https://github.com/nekhbet/WebForensik)
+
+```
+// For a more current version please check "lorg" tool above
+./webforensik.php -o html -i combined logs/combined-generated-logs.log.1
+```
+
+E) [flrnull/http-logs-analyzer](https://github.com/flrnull/http-logs-analyzer)
+
+```
+http-logs-analyzer -f logs/combined-generated-logs.log.1
+```
+
+F) [EventLogAnalyzer](https://www.manageengine.com/products/eventlog/)
 
 
 ### License
