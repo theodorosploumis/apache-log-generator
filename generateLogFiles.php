@@ -7,5 +7,5 @@ include_once 'includes/apacheLogGenerator.inc';
 //global $time_format;
 
 // Generate gz log files
-generateLogFiles('10000', '1', 'logs', 'website-combined-access.log', 'combined', true, false);
-generateLogFiles('10000', '1', 'logs', 'website-common-access.log', 'common', true, false);
+generateLogFiles('10000', '1', 'logs', 'combined1.log', 'combined', true, false);
+generateLogFiles('10000', '1', 'logs', 'common1.log', 'common', true, false);

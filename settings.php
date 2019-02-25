@@ -5,6 +5,11 @@ $time_zone = 'Europe/Athens';
 //$time_format = 'Y-m-d\TH:i:s';
 $time_format = 'd/M/Y:H:i:s';
 
+$repeater = [
+  '1' => 150,
+  '10' => 3,
+];
+
 $request_ips = [
     '54.36.149.94' => 10, //France
     '45.61.164.120' => 15, // USA
@@ -24,6 +29,8 @@ $request_ips = [
     '86.125.112.230' => 5, // Romania
     '103.36.79.144' => 10, // India
     '91.138.198.224' => 5, // Greece
+    '75.140.82.208' => 2, // USA, Bot
+    '69.46.0.142' => 5 // USA, Bot
 ];
 
 $request_agents = [
@@ -60,6 +67,9 @@ $request_agents = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.11 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.11" => 4,
     "Mozilla/5.0 (X11; OpenBSD amd64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36" => 40,
     "Mozilla/5.0 (Linux; Android 4.1.2; GT-I9100 Build/JZO54K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.99 Mobile Safari/537.36" => 20,
+    "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" => 10, // Bot
+    "Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)" => 10, // Bot
+    "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)" => 5, // Bot
 ];
 
 $attack_suffix = [

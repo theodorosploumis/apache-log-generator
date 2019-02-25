@@ -67,8 +67,12 @@ function generateLogs($items = 1, $export = 'file', $log_format = 'common') {
         $settings['version'] = getRandomWeightedElement($GLOBALS['request_http_version']);
         $settings['referrer'] = getRandomWeightedElement($GLOBALS['request_paths']);
         $settings['agent'] = getRandomWeightedElement($GLOBALS['request_agents']);
+        $settings['repeater'] = getRandomWeightedElement($GLOBALS['repeater']);
 
-        $logs = $logs . createLogRow($settings, $log_format) . $separator;
+        for ($x = 1; $x <= $settings['repeater']; $x++) {
+            $logs = $logs . createLogRow($settings, $log_format) . $separator;
+        }
+        $i += $settings['repeater'];
     }
 
     return $logs;
