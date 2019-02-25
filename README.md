@@ -93,6 +93,16 @@ http-logs-analyzer -f logs/combined-generated-logs.log.1
 php parser.php logs/combined-generated-logs.log.1
 ```
 
+- [pinguinens/AnalyzeMyAccessLog](https://github.com/pinguinens/AnalyzeMyAccessLog)
+```
+php parser.php logs/combined-generated-logs.log.1
+```
+
+- [LagrangianPoint/Apache-Access-Log-Analyzer](https://github.com/LagrangianPoint/Apache-Access-Log-Analyzer)
+```
+python access-log-analizer.py
+```
+
 - [EventLogAnalyzer](https://www.manageengine.com/products/eventlog/)
 
 ---
@@ -114,6 +124,25 @@ goaccess --log-format=COMBINED -o myreport.html \
 // See examples at http://www.hping.org/visitors
 ./visitors -f myreport.html logs/combined-generated-logs.log.1
 ```
+
+- [cavo789/apache_logreader](https://github.com/cavo789/apache_logreader)
+
+
+- [kbence/logan](https://github.com/kbence/logan)
+```
+logan 
+```
+
+-[webalizer](http://www.webalizer.org)
+```
+webalizer -c clf logs/combined-generated-logs.log.1
+```
+
+- [https://github.com/pbek/loganalyzer](https://github.com/pbek/loganalyzer)
+
+- [rory/apache-log-parser](https://github.com/rory/apache-log-parser)
+
+
 ---
 
 ### License
