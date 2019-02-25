@@ -14,6 +14,8 @@ php -f generateLogFiles.php
 This will generate by default 10 log files of 10,000 rows each (~1.1MB) 
 on folder 'logs' as also as the equivalent .gz files.
 
+---
+
 ### Log formats
 
 See [apache2 mod_log_config](http://httpd.apache.org/docs/current/mod/mod_log_config.html) for more details.
@@ -26,43 +28,36 @@ LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
 ```
 
-### Visualize logs examples
-A) [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer) 
- 
-```
-request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
-```
-
-B) [goaccess](https://goaccess.io)
-
-```
-goaccess --log-format=COMBINED -o myreport.html \
-         --real-time-html -f logs/combined-generated-logs.log.1
-```
-
-C) [antirez/visitors](https://github.com/antirez/visitors)
-
-```
-// See examples at http://www.hping.org/visitors
-./visitors -f myreport.html logs/combined-generated-logs.log.1
-```
+---
 
 ### Log analyzers for security problems
 
-A) [scalp](https://github.com/BalloonPlanet/apache-scalp)
-
+- [scalp](https://github.com/BalloonPlanet/apache-scalp)
 ```
 python scalp/scalp.py -l logs/combined-generated-logs.log.1 --html --output ~/scalp/export
 ```
 
-B) [lorg](https://github.com/jensvoid/lorg)
-
+- [lorg](https://github.com/jensvoid/lorg)
 ```
 ./lorg -d phpids -i combined logs/combined-generated-logs.log.1
 ```
 
-C) [retep007/webserver-log](https://github.com/retep007/webserver-log)
+- [ryanermita/apache-logs-analyzer](https://github.com/ryanermita/apache-logs-analyzer)
+```
+python src/parse_logs.py -c get_sql_injections -F logs/combined-access.log
+```
 
+- [logswan](https://www.logswan.org/)
+```
+logswan -g logs/combined-access.log
+```
+
+- [matsuu/kataribe](https://github.com/matsuu/kataribe)
+```
+cat logs/combined-access.log | ./kataribe
+```
+
+- [retep007/webserver-log](https://github.com/retep007/webserver-log)
 ```
 # Example of one file apache logs at webserver_log.conf settings file
 
@@ -82,21 +77,44 @@ services:
 ./webserver_log -c webserver_log.conf
 ```
 
-D) [nekhbet/WebForensik](https://github.com/nekhbet/WebForensik)
-
+- [nekhbet/WebForensik](https://github.com/nekhbet/WebForensik)
 ```
 // For a more current version please check "lorg" tool above
 ./webforensik.php -o html -i combined logs/combined-generated-logs.log.1
 ```
 
-E) [flrnull/http-logs-analyzer](https://github.com/flrnull/http-logs-analyzer)
-
+- [flrnull/http-logs-analyzer](https://github.com/flrnull/http-logs-analyzer)
 ```
 http-logs-analyzer -f logs/combined-generated-logs.log.1
 ```
 
-F) [EventLogAnalyzer](https://www.manageengine.com/products/eventlog/)
+- [kzon/http-access-log-parser](https://github.com/kzon/http-access-log-parser)
+```
+php parser.php logs/combined-generated-logs.log.1
+```
 
+- [EventLogAnalyzer](https://www.manageengine.com/products/eventlog/)
+
+---
+
+### Visualize logs examples
+- [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer) 
+```
+request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
+```
+
+- [goaccess](https://goaccess.io)
+```
+goaccess --log-format=COMBINED -o myreport.html \
+         --real-time-html -f logs/combined-generated-logs.log.1
+```
+
+- [antirez/visitors](https://github.com/antirez/visitors)
+```
+// See examples at http://www.hping.org/visitors
+./visitors -f myreport.html logs/combined-generated-logs.log.1
+```
+---
 
 ### License
 [MIT](LICENSE) 2019
