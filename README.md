@@ -127,13 +127,12 @@ goaccess --log-format=COMBINED -o myreport.html \
 
 - [cavo789/apache_logreader](https://github.com/cavo789/apache_logreader)
 
-
 - [kbence/logan](https://github.com/kbence/logan)
 ```
 logan 
 ```
 
--[webalizer](http://www.webalizer.org)
+- [webalizer](http://www.webalizer.org)
 ```
 webalizer -c clf logs/combined-generated-logs.log.1
 ```
