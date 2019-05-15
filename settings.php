@@ -5,9 +5,15 @@ $time_zone = 'Europe/Athens';
 //$time_format = 'Y-m-d\TH:i:s';
 $time_format = 'd/M/Y:H:i:s';
 
+// Start & end datetime for logs in unix timestamp
+$time_limit_start = '1558137601'; // May 18 2019 - 12:00:01
+$time_limit_offset = '86400'; // + 1 Day
+// $time_limit_end = '3600'; // + 1hr
+
 $repeater = [
-  '1' => 100,
-  '10' => 1,
+  '1' => 80,
+  '5' => 8,
+  '10' => 2,
 ];
 
 $request_ips = [

@@ -1,12 +1,13 @@
 <?php
+include_once __DIR__ . '/../settings.php';
 
 /**
- * @param int $offset
+ * @param int $offset (sec)
  * @param int $format
  * @param int $time_zone
  * @return false|string
  */
-function generateTimestamp($offset, $format, $time_zone) {
+function generateTimestampWithOffset($offset, $format, $time_zone) {
     date_default_timezone_set($time_zone);
     $date = date($format, strtotime("+$offset sec"));
 

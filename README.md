@@ -108,6 +108,7 @@ python access-log-analizer.py
 ---
 
 ### Visualize logs examples
+
 - [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer) 
 ```
 request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
