@@ -1,4 +1,5 @@
 <?php
+// Copy this to .settings.php
 
 // Settings - Configuration
 $time_zone = 'Europe/Athens';
@@ -6,7 +7,8 @@ $time_zone = 'Europe/Athens';
 $time_format = 'd/M/Y:H:i:s';
 
 // Start & end datetime for logs in unix timestamp
-$time_limit_start = '1558137601'; // May 18 2019 - 12:00:01
+$time_limit_start = '1558137600'; // May 18 2019 - 00:00:01
+// $time_limit_offset = '604800'; // + 1 Week
 $time_limit_offset = '86400'; // + 1 Day
 // $time_limit_end = '3600'; // + 1hr
 

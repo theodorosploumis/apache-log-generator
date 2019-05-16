@@ -2,11 +2,12 @@
 
 include_once __DIR__ . '/includes/generateLogFile.php';
 include_once __DIR__ . '/includes/generateRealTimeLogs.php';
+include_once __DIR__ . '/includes/generateLogsBySize.php';
 include_once __DIR__ . '/includes/generateLogsByDates.php';
 
-// Generate gz log files
-// generateLogFiles('10000', '1', 'logs', 'common1.log', 'common', true, false);
+// Generate 10 log files with maximum 10000 rows per file starting from now
+// php -r 'require "index.php"; generateLogsBySize(0, 10, 1000);'
 
 // Generate date limited files
-// generateLogsByDates(1558137601, 86400, 10000, 'logs', 'website-access.log', true, 'common');
-// generateLogsByDates(1558137601, 86400, 10000);
+// php -r "require 'index.php'; generateLogsByDates(1558134000, 86400, 10000, 'logs', 'website-access.log', true, 'common');"
+// php -r "require 'index.php'; generateLogsByDates(1558134000, 86400, 10000);"

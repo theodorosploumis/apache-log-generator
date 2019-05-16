@@ -2,16 +2,27 @@
 A simple php file that can generate fake apache2 access log files.
 
 ### Usage
-You can add your own `settings.php`.
+You can add your own `.settings.php`.
 
 ```
 git clone git@github.com:theodorosploumis/apache-log-generator.git
 cd apache-log-generator
 
-// Generate log files (see generateLogFiles.php example)
-php -f generateLogFiles.php
 ```
-This will generate by default 10 log files of 10,000 rows each (~1.1MB) 
+
+Execute using php:
+```
+// Generate date limited files starting from '19 May 2019' (timestamp '1558137601') with offset '1 Day' (86400) and row limit 10k rows by file
+php -r "require 'index.php'; generateLogsByDates(1558137601, 86400, 10000);"
+
+// Generate date limited files starting from 'now' (timestamp '0') with offset '1 Day' and row limit 10k rows by file
+php -r "require 'index.php'; generateLogsByDates(0, 86400, 10000);"
+
+// Generate 10 log files with maximum 10000 rows per file starting from now
+php -r 'require "index.php"; generateLogsBySize(0, 10, 1000);'
+
+```
+This will generate by default 10 log files of 10,000 rows each (~1.1MB)
 on folder 'logs' as also as the equivalent .gz files.
 
 ---
@@ -109,7 +120,7 @@ python access-log-analizer.py
 
 ### Visualize logs examples
 
-- [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer) 
+- [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer)
 ```
 request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
 ```
@@ -130,7 +141,7 @@ goaccess --log-format=COMBINED -o myreport.html \
 
 - [kbence/logan](https://github.com/kbence/logan)
 ```
-logan 
+logan
 ```
 
 - [webalizer](http://www.webalizer.org)

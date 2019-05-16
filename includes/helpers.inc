@@ -1,17 +1,28 @@
 <?php
-include_once __DIR__ . '/../settings.php';
+$default_settings = __DIR__ . '/../.settings.php';
+
+if (file_exists($default_settings)) {
+  include_once $default_settings;
+} else {
+  print "File .settings.php is missing.";
+  exit();
+}
 
 /**
+ * @param int $initial_date (timestamp)
  * @param int $offset (sec)
  * @param int $format
  * @param int $time_zone
- * @return false|string
+ * @return string
  */
-function generateTimestampWithOffset($offset, $format, $time_zone) {
-    date_default_timezone_set($time_zone);
-    $date = date($format, strtotime("+$offset sec"));
+function generateTimestampWithOffset($initial_date, $offset, $format, $time_zone) {
+  date_default_timezone_set($time_zone);
+  if ($initial_date == '0') {
+    $initial_date = time();
+  }
+  $date = date($format, $initial_date + $offset);
 
-    return $date;
+  return $date;
 }
 
 /**

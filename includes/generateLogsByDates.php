@@ -10,23 +10,20 @@ include_once __DIR__ . '/generateLogFile.php';
  * @param string $directory
  * @param string $name
  * @param string $log_format
- * @param bool $keep_files
  */
-function generateLogsByDates($from_date, $offset = 3600, $items_by_file = 10000) {
-  $loops = $from_date + $offset;
-  $suffix = 0;
+function generateLogsByDates($from_date = 0, $dates_offset = 86400, $items_by_file = 10000) {
+  $loops = $from_date + $dates_offset;
+  $suffix = 1;
 
-  if ($offset < $items_by_file) {
-    $logs = generateLogs($i, $offset);
-    generateLogFile($logs);
-  } else {
-    for ($i = $from_date; $i <= $loops; $i++) {
-      $suffix++;
+  for ($i = $from_date; $i <= $loops; $items_by_file) {
 
-      $logs = generateLogs($i, $items_by_file);
-      generateLogFile($logs, $suffix);
+    $results = generateLogs($i, $items_by_file);
+    $logs = $results['text'];
+    $rows = $results['rows'];
 
-      $i = $i + $items_by_file;
-    }
+    generateLogFile($logs, $suffix);
+
+    $i = $i + $rows;
+    $suffix++;
   }
 }
