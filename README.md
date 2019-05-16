@@ -127,6 +127,7 @@ python access-log-analizer.py
 - [request-log-analyzer](https://github.com/wvanbergen/request-log-analyzer)
 ```
 request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
+request-log-analyzer --apache-format common /etc/log/all.log --output HTML --file ~/ruby-apache-log-analyzer.html
 ```
 
 - [goaccess](https://goaccess.io)
