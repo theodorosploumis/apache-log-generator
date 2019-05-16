@@ -103,6 +103,10 @@ http-logs-analyzer -f logs/combined-generated-logs.log.1
 ```
 php parser.php logs/combined-generated-logs.log.1
 ```
+- [tilfin/detect-http-attack](https://github.com/tilfin/detect-http-attack)
+```
+./detect-http-attack.rb -s 8 < /var/log/apache/access_log
+```
 
 - [pinguinens/AnalyzeMyAccessLog](https://github.com/pinguinens/AnalyzeMyAccessLog)
 ```
