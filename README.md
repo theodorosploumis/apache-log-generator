@@ -131,8 +131,8 @@ request-log-analyzer --apache-format combined logs/combined-generated-logs.log.1
 
 - [goaccess](https://goaccess.io)
 ```
-goaccess --log-format=COMBINED -o myreport.html \
-         --real-time-html -f logs/combined-generated-logs.log.1
+goaccess --log-format=COMBINED -o myreport.html --real-time-html -f logs/combined-generated-logs.log.1
+goaccess -o goaccess-report.html -f ~/logs/all.log -p goaccess.conf
 ```
 
 - [antirez/visitors](https://github.com/antirez/visitors)
