@@ -12,9 +12,8 @@ cd apache-log-generator
 
 Execute using php:
 ```
-// Generate date limited files starting from '19 May 2019' 
-// (timestamp '1558137601') with offset '1 Day' (86400) and 
-// row limit 10k rows by file
+// Generate date limited files starting from '19 May 2019' (timestamp '1558137601') 
+// with offset '1 Day' (86400) and row limit 10k rows by file
 php -r "require 'index.php'; generateLogsByDates(1558137601, 86400, 10000);"
 
 // Generate date limited files starting from 'now' (timestamp '0') 
