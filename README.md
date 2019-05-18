@@ -58,6 +58,8 @@ python scalp/scalp.py -l logs/combined-generated-logs.log.1 --html --output ~/sc
 python src/parse_logs.py -c get_sql_injections -F logs/combined-access.log
 ```
 
+- [fhidalgo/attacks_checker](https://github.com/fhidalgo/attacks_checker)
+
 - [logswan](https://www.logswan.org/)
 ```
 logswan -g logs/combined-access.log
@@ -87,6 +89,13 @@ services:
 // Add your settings at secutity-log.yaml
 ./webserver_log -c webserver_log.conf
 ```
+
+- [pobyzaarif/hansipy](https://github.com/pobyzaarif/hansipy)
+```
+python hansipy.py
+```
+
+- []()
 
 - [nekhbet/WebForensik](https://github.com/nekhbet/WebForensik)
 ```
