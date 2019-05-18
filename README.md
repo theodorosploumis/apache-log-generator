@@ -18,12 +18,8 @@ php -r "require 'index.php'; generateLogsByDates(1558137601, 86400, 10000);"
 // Generate date limited files starting from 'now' (timestamp '0') with offset '1 Day' and row limit 10k rows by file
 php -r "require 'index.php'; generateLogsByDates(0, 86400, 10000);"
 
-// Generate 10 log files with maximum 10000 rows per file starting from now
-php -r 'require "index.php"; generateLogsBySize(0, 10, 1000);'
-
 ```
-This will generate by default 10 log files of 10,000 rows each (~1.1MB)
-on folder 'logs' as also as the equivalent .gz files.
+
 
 ---
 

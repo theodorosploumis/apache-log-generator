@@ -33,14 +33,18 @@ function generateLogs($from_date = 0, $items = 1, $export = 'file', $log_format 
       $settings['agent'] = getRandomWeightedElement($GLOBALS['request_agents']);
       $settings['repeater'] = getRandomWeightedElement($GLOBALS['repeater']);
 
+      $i += $settings['repeater'] - 1;
+
+      if ($i > $items) {
+        $settings['repeater'] = $items - $i - $settings['repeater'];
+      }
+
       for ($x = 1; $x <= $settings['repeater']; $x++) {
         $logs = $logs . createLogRow($settings, $log_format) . $separator;
       }
-
-      $i += $settings['repeater'] - 1;
-      $results['rows'] = $i;
     }
 
+    $results['rows'] = $i;
     $results['text'] = $logs;
 
     return $results;
