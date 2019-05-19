@@ -57,10 +57,8 @@ python src/parse_logs.py -c get_sql_injections -F logs/combined-access.log
 ```
 
 - [fhidalgo/attacks_checker](https://github.com/fhidalgo/attacks_checker)
-
-- [logswan](https://www.logswan.org/)
 ```
-logswan -g logs/combined-access.log
+TBD
 ```
 
 - [matsuu/kataribe](https://github.com/matsuu/kataribe)
@@ -92,8 +90,6 @@ services:
 ```
 python hansipy.py
 ```
-
-- []()
 
 - [nekhbet/WebForensik](https://github.com/nekhbet/WebForensik)
 ```
@@ -154,6 +150,11 @@ goaccess -o goaccess-report.html -f ~/logs/all.log -p goaccess.conf
 - [kbence/logan](https://github.com/kbence/logan)
 ```
 logan
+```
+
+- [logswan](https://www.logswan.org/)
+```
+logswan -g logs/combined-access.log
 ```
 
 - [webalizer](http://www.webalizer.org)
