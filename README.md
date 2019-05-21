@@ -162,6 +162,8 @@ logswan -g logs/combined-access.log
 webalizer -c clf logs/combined-generated-logs.log.1
 ```
 
+- [awstats](https://awstats.sourceforge.io)
+
 - [https://github.com/pbek/loganalyzer](https://github.com/pbek/loganalyzer)
 
 - [rory/apache-log-parser](https://github.com/rory/apache-log-parser)
